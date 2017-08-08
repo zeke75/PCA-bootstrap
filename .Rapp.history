@@ -1,0 +1,3799 @@
+n=1000#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+sigma[1,1]=d^2#
+xdata=mvrnorm(n, mu, sigma)#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+n=200#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+sigma[1,1]=d^2#
+xdata=mvrnorm(n, mu, sigma)#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+cum.var
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+n=500#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+sigma[1,1]=d^2#
+xdata=mvrnorm(n, mu, sigma)#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+n=100#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+sigma[1,1]=d^2#
+xdata=mvrnorm(n, mu, sigma)#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=50#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+sigma[1,1]=d^2#
+xdata=mvrnorm(n, mu, sigma)#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=50#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+sigma[1,1]=d^2#
+xdata=mvrnorm(n, mu, sigma)#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+qq=mvrnorm(20,c(0,0),matrix(c(1,1,1,1),2,2))
+qq
+plot(qq)
+xdata=qq
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)
+cum.var
+n=1000#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if ((i>=5 || j>=5) && (i!=j)){sigma[i,j]=1}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+n=1000#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if ((i>=5 || j>=5) && (i!=j)){sigma[i,j]=1}#
+	}#
+}
+n=20#
+B=500#
+d=5#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if ((i>=5 || j>=5) && (i!=j)){sigma[i,j]=1}#
+	}#
+}
+sigma
+n=20#
+B=500#
+d=10#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=5 && j>=5 && (i!=j)){sigma[i,j]=1}#
+	}#
+}
+sigma
+xdata=mvrnorm(n, mu, sigma)
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+cum.var
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion#
+#
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .95)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=1000#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=5 && j>=5 && (i!=j)){sigma[i,j]=1}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+cum.var
+#data2#
+#
+n=1000#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=20 && j>=20 && (i!=j)){sigma[i,j]=1}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+cum.var
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .95)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .95)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+B=2000
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(500,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .98)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+n=1000#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=20 && j>=20 && (i!=j)){sigma[i,j]=.99}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+cum.var
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=200#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=20 && j>=20 && (i!=j)){sigma[i,j]=.99}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=100#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=20 && j>=20 && (i!=j)){sigma[i,j]=.99}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+B=5000
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .995)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=1000#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=5 && j>=5 && (i!=j)){sigma[i,j]=.99}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+cum.var
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=100#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=5 && j>=5 && (i!=j)){sigma[i,j]=.99}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+n=100#
+B=500#
+d=100#
+#
+mu=rep(0,d)#
+sigma=diag(d)#
+for (i in 1:d){#
+	for (j in 1:d) {#
+		if (i>=5 && j>=5 && (i!=j)){sigma[i,j]=.99}#
+	}#
+}#
+xdata=mvrnorm(n, mu, sigma)#
+#
+s = 1/n*t(xdata)%*%xdata#
+eigenvectors = eigen(s)$vectors#
+eigenvalues = eigen(s)$values#
+#
+scores = xdata%*%eigenvectors      # new data after pca#
+total.var = sum(eigenvalues)       # total variance#
+prop.var = eigenvalues/total.var   # proportion of variance#
+cum.var = cumsum(prop.var)         # culmulative proportion
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+p
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PCA"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+method="bootstrap PC"#
+#
+if (method == "bootstrap PCA"){#
+	p = sum(cum.var < .99)+1       # first p components capture 95% variance#
+	} else {p=d};#
+# bootstrapping the firt p principle components#
+pj = solve(eigenvectors)#
+center = apply(xdata,2,mean)#
+bdata = array(,dim=c(n,d,B))#
+a = array(,dim=c(n,d,B))#
+bs = rep(0,B)#
+w=rep(0,B)#
+#
+for (i in 1:B) {#
+	a[,1:p,i] = scores[sample(1:n,replace=T),1:p]#
+	a[,,i] = cbind(a[,1:p,i],scores[,-(1:p)])#
+    # mapping back#
+    bdata[,,i]=a[,,i]%*%(pj)#
+    bs[i]=max(apply(bdata[,,i],2,mean)-center)*sqrt(n)#
+}#
+#
+x=mvrnorm(5000,rep(0,d),sigma)#
+xx=apply(x,1,max)#
+#
+# Two-sample Kolmogorov-Smirnov test#
+# bs & xx have same distribution if p-value>0.01#
+ks.test(bs,xx)
+source("test7.r")
+source("test7.r")
+?ke.test
+?ks.test
+source("test7.r")
+pvalue
+a
+dim(pvalue)
+length(pvalue)
+i
+source("test7.r")
+pvalue
+a
+source("test7.r")
+source("test8.r")
+source("test7.r")
+source("test8.r")
+source("test8.r")
+source("test7.r")
+source("test8.r")
+source("test8.r")
+source("test7.r")
+par(mfrow=c(1,2))
+source("test7.r")
+source("test8.r")
+par(mfrow=c(1,2))
+source("test7.r")
+source("test8.r")
+par(mfrow=c(1,2))
+source("test7.r")
+source("test8.r")
+sum(pvalue>0.01)
+source("test7.r")
+sum(pvalue>0.01)
+source("test8.r")
+sum(pvalue>0.01)
+source("test7.r")
+sum(pvalue>0.01)
+par(mfrow=c(1,2))
+source("test7.r")
+sum(pvalue>0.01)
+source("test8.r")
+sum(pvalue>0.01)
+par(mfrow=c(1,2))
+source("test7.r")
+p
+sum(pvalue>.01)
+source("test8.r")
+source("test7.r")
+source("test8.r")
+source("test7.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test8.r")
+source("test7.r")
+source("test8.r")
+x=rnorm(100)
+ks.test(x,pnorm)
+40！
+choose(40,30)
+choose(40,30)*(.75^30)*(.25^10)
+?choose
+dmnom(c(10,5,7,3),25,c(9/16,3/16,3/16,1/16))
+dmnom(c(10,5,7,3),25,c(9/16,3/16,3/16,1/16))
+?dmnom
+labrary(combinat)
+install.packages(combinat)
+install.packages("combinat.r")
+dmultinom(c(10,5,7,3),prob=c(9/16,3/16,3/16,1/16))
